@@ -519,7 +519,9 @@ const ARTISTS = [
   },
 ];
 
-const RELEASES = [
+/* Używane tylko jako fallback, gdy videos.json (odświeżany co tydzień przez
+   cron -> fetch-videos.php) jest niedostępny, np. przy pierwszym wdrożeniu. */
+const RELEASES_FALLBACK = [
   { artist: "Rude Beat Foundation", title: "Collective Consciousness — Energetic DnB · Jungle", id: "06Esi5gdCiw" },
   { artist: "Rude Beat Foundation", title: "Organic Mistake — The Human Glitch in the Machine", id: "qSPUP0PsIeI" },
   { artist: "Rude Beat Foundation", title: "In the Loop — Melancholic Drum & Bass / Jungle", id: "B-5GPUSg36w" },
@@ -566,23 +568,43 @@ document.getElementById("artist-list").innerHTML = ARTISTS.map((a, i) => `
     </div>
   </article>`).join("");
 
-document.getElementById("release-grid").innerHTML = RELEASES.map(r => `
-  <a class="rel reveal" href="${yt(r.id)}" target="_blank" rel="noopener">
-    <div class="rel-thumb">
-      <img src="${thumb(r.id)}" alt="${esc(r.title)}" loading="lazy">
-      <div class="rel-play"><span>${PLAY}</span></div>
-    </div>
-    <div class="rel-info">
-      <div class="rel-artist">${esc(r.artist)}</div>
-      <div class="rel-title">${esc(r.title)}</div>
-    </div>
-  </a>`).join("");
+function renderReleases(releases) {
+  document.getElementById("release-grid").innerHTML = releases.map(r => `
+    <a class="rel reveal" href="${yt(r.id)}" target="_blank" rel="noopener">
+      <div class="rel-thumb">
+        <img src="${thumb(r.id)}" alt="${esc(r.title)}" loading="lazy">
+        <div class="rel-play"><span>${PLAY}</span></div>
+      </div>
+      <div class="rel-info">
+        <div class="rel-artist">${esc(r.artist)}</div>
+        <div class="rel-title">${esc(r.title)}</div>
+      </div>
+    </a>`).join("");
+}
 
-/* reveal on scroll */
+/* reveal on scroll — obserwuje też karty dodane po async fetchu wydań */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
 }, { threshold: 0.12 });
-document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+function observeReveals() {
+  document.querySelectorAll(".reveal:not(.in)").forEach(el => io.observe(el));
+}
+
+observeReveals();
+renderReleases(RELEASES_FALLBACK);
+observeReveals();
+
+/* videos.json jest generowany co tydzień przez cron -> fetch-videos.php;
+   przy braku pliku/błędzie zostaje lista awaryjna RELEASES_FALLBACK. */
+fetch("videos.json", { cache: "no-store" })
+  .then(res => res.ok ? res.json() : null)
+  .then(data => {
+    if (data && Array.isArray(data.releases) && data.releases.length) {
+      renderReleases(data.releases);
+      observeReveals();
+    }
+  })
+  .catch(() => {});
 
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
