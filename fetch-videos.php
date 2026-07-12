@@ -8,7 +8,8 @@
 $channelId = 'UCIcZQZBpdx7_4X5KC0AQm1Q';
 $rssUrl = "https://www.youtube.com/feeds/videos.xml?channel_id={$channelId}";
 $outputFile = __DIR__ . '/videos.json';
-$maxReleases = 12;
+$archiveFile = __DIR__ . '/releases-archive.json';
+$maxReleases = 8;
 
 // Old Punks Desperate Riot musi być sprawdzone przed Rude Beat Foundation,
 // bo "Rude Beat" bywa częścią nazwy label w tytułach innych projektów.
@@ -80,11 +81,27 @@ foreach ($xml->entry as $entry) {
         'title' => $title,
         'id' => $videoId,
     ];
+}
 
-    if (count($releases) >= $maxReleases) {
-        break;
+// RSS kanału zwraca tylko ~15 najnowszych wrzutek (w tym Shorts), więc gdy
+// świeżych pełnych wydań jest mniej niż $maxReleases, dobijamy do limitu
+// starszymi, znanymi wydaniami z archiwum (bez duplikatów po id).
+if (count($releases) < $maxReleases && file_exists($archiveFile)) {
+    $archive = json_decode(file_get_contents($archiveFile), true) ?: [];
+    $seenIds = array_column($releases, 'id');
+    foreach ($archive as $item) {
+        if (count($releases) >= $maxReleases) {
+            break;
+        }
+        if (in_array($item['id'], $seenIds, true)) {
+            continue;
+        }
+        $releases[] = $item;
+        $seenIds[] = $item['id'];
     }
 }
+
+$releases = array_slice($releases, 0, $maxReleases);
 
 $payload = [
     'updated' => gmdate('c'),

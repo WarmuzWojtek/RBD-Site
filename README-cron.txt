@@ -4,6 +4,9 @@ AUTOMATYCZNE ODŚWIEŻANIE LISTY WYDAŃ (YouTube -> videos.json)
 Jak to działa:
 - fetch-videos.php pobiera RSS kanału YouTube (bez klucza API) i zapisuje
   najnowsze wydania do videos.json (pomija Shorts).
+- RSS zwraca tylko ~15 ostatnich wrzutek kanału, więc jeśli świeżych pełnych
+  wydań jest mniej niż 8, brakującą resztę dobiera ze releases-archive.json
+  (starsze, znane wydania — bez duplikatów po id z tymi z RSS).
 - index.html przy każdym wczytaniu strony robi fetch("videos.json") i
   renderuje sekcję "Latest Releases" z tego pliku. Jeśli plik nie istnieje
   albo fetch się nie uda, wyświetla się zapasowa, wpisana na sztywno lista
@@ -14,8 +17,9 @@ Jak to działa:
   byłoby wiarygodne.
 
 Wdrożenie na hostido.pl:
-1. Wgraj na serwer: index.html, fetch-videos.php (videos.json wgraj też,
-   jako pierwsze dane — zostanie nadpisany przy pierwszym uruchomieniu crona).
+1. Wgraj na serwer: index.html, fetch-videos.php, releases-archive.json
+   (videos.json wgraj też, jako pierwsze dane — zostanie nadpisany przy
+   pierwszym uruchomieniu crona).
 2. W panelu hostido znajdź sekcję "Cron" / "Zadania cykliczne".
 3. Dodaj nowe zadanie:
    - Częstotliwość: raz w tygodniu (np. w niedzielę o 03:00)
