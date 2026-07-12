@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rude Beat Distro — The Sonic Frontier</title>
+<meta name="description" content="Rude Beat Distro – independent label. The Sonic Frontier where Punk DNA meets the Underground. Drum & Bass, Jungle, Cyberpunk Electronica.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060709;
+  --bg-2:#0c0e12;
+  --panel:#101318;
+  --line:rgba(255,255,255,.08);
+  --txt:#e8eaed;
+  --muted:#8a919c;
+  --acid:#c8ff1e;
+  --pink:#ff2d78;
+  --cyan:#22d3ee;
+  --spotify:#1ed760;
+  --yt:#ff0033;
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'Space Grotesk',sans-serif;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+::selection{background:var(--acid);color:#000}
+
+/* ---------- noise + scanline overlay ---------- */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.04;
+  background:repeating-linear-gradient(0deg,transparent 0 2px,#000 2px 4px);
+}
+
+h1,h2,h3,.display{font-family:'Unbounded',sans-serif}
+.mono{font-family:'JetBrains Mono',monospace}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+section{position:relative}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(6,7,9,.72);border-bottom:1px solid var(--line);
+}
+.nav-in{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:28px}
+.logo{font-family:'Unbounded',sans-serif;font-weight:900;font-size:15px;letter-spacing:.06em;white-space:nowrap}
+.logo em{font-style:normal;color:var(--acid)}
+.nav-links{display:flex;gap:22px;margin-left:auto}
+.nav-links a{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--acid)}
+.nav-cta{display:flex;gap:10px;margin-left:18px}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 16px;border-radius:99px;border:1px solid var(--line);
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+}
+.chip:hover{transform:translateY(-2px)}
+.chip.sp{background:rgba(30,215,96,.12);border-color:rgba(30,215,96,.4);color:var(--spotify)}
+.chip.sp:hover{box-shadow:0 6px 24px rgba(30,215,96,.35)}
+.chip.yt{background:rgba(255,0,51,.12);border-color:rgba(255,0,51,.4);color:#ff5d75}
+.chip.yt:hover{box-shadow:0 6px 24px rgba(255,0,51,.35)}
+.chip svg{width:15px;height:15px;flex:none}
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:140px 0 90px;position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(55% 45% at 78% 18%, rgba(255,45,120,.14) 0%, transparent 70%),
+    radial-gradient(50% 45% at 15% 80%, rgba(200,255,30,.10) 0%, transparent 70%),
+    radial-gradient(40% 35% at 55% 55%, rgba(34,211,238,.07) 0%, transparent 70%);
+}
+.grid-bg{
+  position:absolute;inset:0;pointer-events:none;opacity:.25;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(70% 70% at 50% 40%,#000 30%,transparent 100%);
+  -webkit-mask-image:radial-gradient(70% 70% at 50% 40%,#000 30%,transparent 100%);
+}
+.tag{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--acid);margin-bottom:26px;
+}
+.tag::before{content:"";width:34px;height:1px;background:var(--acid)}
+.hero h1{
+  font-size:clamp(42px,7.2vw,104px);font-weight:900;line-height:.98;
+  letter-spacing:-.01em;text-transform:uppercase;
+}
+.hero h1 .stroke{
+  color:transparent;-webkit-text-stroke:1.5px rgba(232,234,237,.85);
+}
+.hero h1 .acid{color:var(--acid)}
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{
+  content:attr(data-t);position:absolute;left:0;top:0;width:100%;overflow:hidden;
+  clip-path:inset(0 0 0 0);opacity:0;
+}
+.glitch::before{color:var(--pink);z-index:-1}
+.glitch::after{color:var(--cyan);z-index:-2}
+.glitch:hover::before,.hero .glitch::before{animation:gl1 2.8s infinite steps(1)}
+.glitch:hover::after,.hero .glitch::after{animation:gl2 2.8s infinite steps(1)}
+@keyframes gl1{
+  0%,92%{opacity:0;transform:none;clip-path:inset(0 0 100% 0)}
+  93%{opacity:.85;transform:translate(-6px,3px);clip-path:inset(12% 0 55% 0)}
+  95%{opacity:.85;transform:translate(5px,-2px);clip-path:inset(60% 0 8% 0)}
+  97%{opacity:0}
+}
+@keyframes gl2{
+  0%,93%{opacity:0;transform:none;clip-path:inset(0 0 100% 0)}
+  94%{opacity:.85;transform:translate(6px,-3px);clip-path:inset(40% 0 30% 0)}
+  96%{opacity:.85;transform:translate(-5px,2px);clip-path:inset(5% 0 78% 0)}
+  98%{opacity:0}
+}
+.hero p.lead{
+  max-width:560px;margin-top:30px;font-size:18px;font-weight:300;color:var(--muted);
+}
+.hero p.lead b{color:var(--txt);font-weight:500}
+.hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:44px}
+.btn{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:'Unbounded',sans-serif;font-size:14px;font-weight:600;letter-spacing:.04em;
+  padding:18px 32px;border-radius:99px;transition:transform .2s,box-shadow .25s;
+}
+.btn svg{width:20px;height:20px;flex:none}
+.btn:hover{transform:translateY(-3px) scale(1.02)}
+.btn.sp{background:var(--spotify);color:#04140a}
+.btn.sp:hover{box-shadow:0 14px 44px rgba(30,215,96,.45)}
+.btn.yt{background:var(--yt);color:#fff}
+.btn.yt:hover{box-shadow:0 14px 44px rgba(255,0,51,.45)}
+.btn.ghost{border:1px solid var(--line);color:var(--txt);background:rgba(255,255,255,.03)}
+.btn.ghost:hover{border-color:var(--acid);color:var(--acid)}
+.hero-stats{display:flex;gap:44px;margin-top:64px;flex-wrap:wrap}
+.stat .n{font-family:'Unbounded',sans-serif;font-size:30px;font-weight:800;color:var(--acid)}
+.stat .l{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- marquee ---------- */
+.marquee{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;padding:16px 0;background:var(--bg-2);
+}
+.marquee-track{display:flex;gap:0;width:max-content;animation:scroll 28s linear infinite}
+.marquee span{
+  font-family:'Unbounded',sans-serif;font-size:14px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;white-space:nowrap;padding:0 28px;color:var(--muted);
+}
+.marquee span:nth-child(odd){color:var(--acid)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- section headers ---------- */
+.sec{padding:110px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:56px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(30px,4.4vw,54px);font-weight:800;text-transform:uppercase;line-height:1.04}
+.sec-head h2 em{font-style:normal;color:transparent;-webkit-text-stroke:1.2px var(--acid)}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--pink);margin-bottom:14px;display:block}
+
+/* ---------- artists ---------- */
+.artists{display:flex;flex-direction:column;gap:26px}
+.artist{
+  display:grid;grid-template-columns:460px 1fr;border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;background:var(--panel);
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+.artist:hover{border-color:rgba(200,255,30,.35);transform:translateY(-4px);box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.artist-media{position:relative;min-height:320px;overflow:hidden}
+.artist-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;filter:saturate(1.15) contrast(1.08)}
+.artist:hover .artist-media img{transform:scale(1.06)}
+.artist-media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 55%,var(--panel) 100%),linear-gradient(0deg,rgba(6,7,9,.5) 0%,transparent 40%);
+}
+.artist-num{
+  position:absolute;top:18px;left:20px;z-index:2;
+  font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--acid);
+  background:rgba(6,7,9,.7);border:1px solid rgba(200,255,30,.4);border-radius:99px;padding:6px 14px;
+  backdrop-filter:blur(6px);
+}
+.artist-body{padding:42px 44px;display:flex;flex-direction:column;gap:18px}
+.artist-body h3{font-size:clamp(22px,2.6vw,34px);font-weight:800;text-transform:uppercase;line-height:1.1}
+.genres{display:flex;flex-wrap:wrap;gap:8px}
+.genre{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 12px;border-radius:99px;border:1px solid var(--line);color:var(--muted);
+}
+.artist-body p{color:var(--muted);font-size:15px;max-width:60ch}
+.tracks{display:flex;flex-direction:column;border-top:1px solid var(--line);margin-top:6px}
+.track{
+  display:flex;align-items:center;gap:14px;padding:11px 4px;border-bottom:1px solid var(--line);
+  font-size:14px;color:var(--txt);transition:background .2s,padding-left .2s;
+}
+.track:hover{background:rgba(200,255,30,.05);padding-left:12px}
+.track .tno{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--acid);width:26px;flex:none}
+.track .tname{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track .play{
+  width:28px;height:28px;flex:none;border-radius:50%;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.track:hover .play{background:var(--yt);border-color:var(--yt)}
+.track .play svg{width:10px;height:10px;fill:var(--muted)}
+.track:hover .play svg{fill:#fff}
+.artist-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto;padding-top:10px}
+.btn.sm{padding:13px 24px;font-size:12px}
+.artist:nth-child(even){grid-template-columns:1fr 460px}
+.artist:nth-child(even) .artist-media{order:2}
+.artist:nth-child(even) .artist-media::after{
+  background:linear-gradient(270deg,transparent 55%,var(--panel) 100%),linear-gradient(0deg,rgba(6,7,9,.5) 0%,transparent 40%);
+}
+
+/* ---------- releases ---------- */
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
+.rel{
+  position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);
+  background:var(--panel);transition:transform .3s,border-color .3s,box-shadow .3s;
+}
+.rel:hover{transform:translateY(-5px);border-color:rgba(255,45,120,.45);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.rel-thumb{position:relative;aspect-ratio:16/9;overflow:hidden}
+.rel-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.rel:hover .rel-thumb img{transform:scale(1.07)}
+.rel-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,7,9,.65),transparent 55%)}
+.rel-play{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;
+}
+.rel-play span{
+  width:56px;height:56px;border-radius:50%;background:rgba(6,7,9,.7);border:1px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);
+  transition:all .25s;
+}
+.rel:hover .rel-play span{background:var(--yt);border-color:var(--yt);transform:scale(1.12)}
+.rel-play svg{width:18px;height:18px;fill:#fff;margin-left:2px}
+.rel-info{padding:16px 18px 18px}
+.rel-artist{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--acid);margin-bottom:6px}
+.rel-title{font-size:14.5px;font-weight:500;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---------- featured ---------- */
+.featured{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.feat-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center}
+.video-frame{
+  position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.6);
+}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.feat-copy h2{font-size:clamp(26px,3.4vw,42px);font-weight:800;text-transform:uppercase;line-height:1.08;margin-bottom:18px}
+.feat-copy h2 em{font-style:normal;color:var(--pink)}
+.feat-copy p{color:var(--muted);margin-bottom:30px}
+
+/* ---------- about / CTA ---------- */
+.about-inner{
+  border:1px solid var(--line);border-radius:calc(var(--radius) + 8px);
+  background:
+    radial-gradient(60% 90% at 85% 10%, rgba(255,45,120,.12), transparent 60%),
+    radial-gradient(50% 80% at 10% 90%, rgba(200,255,30,.10), transparent 60%),
+    var(--panel);
+  padding:clamp(40px,6vw,84px);text-align:center;overflow:hidden;position:relative;
+}
+.about-inner h2{font-size:clamp(26px,4vw,50px);font-weight:900;text-transform:uppercase;line-height:1.08;max-width:19ch;margin:0 auto 20px}
+.about-inner h2 .acid{color:var(--acid)}
+.about-inner p{color:var(--muted);max-width:62ch;margin:0 auto 38px}
+.cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.foot .mono{font-size:11px;color:var(--muted);letter-spacing:.12em}
+.foot-links{display:flex;gap:18px}
+.foot-links a{color:var(--muted);font-size:13px;transition:color .2s}
+.foot-links a:hover{color:var(--acid)}
+
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .artist,.artist:nth-child(even){grid-template-columns:1fr}
+  .artist:nth-child(even) .artist-media{order:0}
+  .artist-media{min-height:240px;aspect-ratio:16/9}
+  .artist-media::after,.artist:nth-child(even) .artist-media::after{
+    background:linear-gradient(0deg,var(--panel) 0%,transparent 60%);
+  }
+  .feat-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media (max-width:560px){
+  .artist-body{padding:28px 22px}
+  .nav-cta .chip span{display:none}
+  .nav-cta .chip{padding:9px 11px}
+  .hero-stats{gap:26px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="logo" href="#top">RUDE<em>BEAT</em> DISTRO</a>
+    <div class="nav-links">
+      <a href="#artists">Artists</a>
+      <a href="#releases">Releases</a>
+      <a href="#about">Label</a>
+    </div>
+    <div class="nav-cta">
+      <a class="chip sp" href="https://open.spotify.com/artist/2Ss9tKcV3B6ZxJnITK6dnW" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.3a.75.75 0 0 1-1.03.25c-2.83-1.73-6.39-2.12-10.59-1.16a.75.75 0 1 1-.33-1.46c4.6-1.05 8.53-.6 11.7 1.34.35.21.46.67.25 1.03zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.24-1.99-8.17-2.57-12-1.4a.94.94 0 1 1-.55-1.8c4.38-1.33 9.81-.68 13.53 1.6.44.27.58.85.31 1.29zm.13-3.4C15.24 8.32 8.84 8.11 5.13 9.23a1.13 1.13 0 1 1-.65-2.16c4.26-1.29 11.33-1.04 15.8 1.62a1.13 1.13 0 0 1-1.18 1.94z"/></svg>
+        <span>Spotify</span>
+      </a>
+      <a class="chip yt" href="https://www.youtube.com/@rudebeatdistro?sub_confirmation=1" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.53A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12c1.88.53 9.38.53 9.38.53s7.5 0 9.38-.53A3 3 0 0 0 23.5 17.8 31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
+        <span>YouTube</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="grid-bg"></div>
+  <div class="wrap">
+    <span class="tag">Independent label — est. underground</span>
+    <h1>
+      <span class="stroke">The Sonic</span><br>
+      <span class="glitch acid" data-t="Frontier">Frontier</span><br>
+      <span>where Punk DNA<br>meets the <span class="stroke">Underground</span></span>
+    </h1>
+    <p class="lead">
+      <b>Rude Beat Distro</b> is a home for machine-age bass music —
+      dark <b>drum&nbsp;&amp;&nbsp;bass</b>, raw <b>jungle</b> and <b>cyberpunk electronica</b>
+      cut with a punk attitude. Press play. Stay rude.
+    </p>
+    <div class="hero-actions">
+      <a class="btn sp" href="https://open.spotify.com/artist/2Ss9tKcV3B6ZxJnITK6dnW" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.3a.75.75 0 0 1-1.03.25c-2.83-1.73-6.39-2.12-10.59-1.16a.75.75 0 1 1-.33-1.46c4.6-1.05 8.53-.6 11.7 1.34.35.21.46.67.25 1.03zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.24-1.99-8.17-2.57-12-1.4a.94.94 0 1 1-.55-1.8c4.38-1.33 9.81-.68 13.53 1.6.44.27.58.85.31 1.29zm.13-3.4C15.24 8.32 8.84 8.11 5.13 9.23a1.13 1.13 0 1 1-.65-2.16c4.26-1.29 11.33-1.04 15.8 1.62a1.13 1.13 0 0 1-1.18 1.94z"/></svg>
+        Listen on Spotify
+      </a>
+      <a class="btn yt" href="https://www.youtube.com/@rudebeatdistro?sub_confirmation=1" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.53A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12c1.88.53 9.38.53 9.38.53s7.5 0 9.38-.53A3 3 0 0 0 23.5 17.8 31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
+        Subscribe on YouTube
+      </a>
+      <a class="btn ghost" href="#artists">Meet the artists ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="n">3</div><div class="l">Artists</div></div>
+      <div class="stat"><div class="n">48+</div><div class="l">Releases on YT</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Underground</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Drum &amp; Bass</span><span>✦</span><span>Jungle</span><span>✦</span><span>Cyberpunk Electronica</span><span>✦</span><span>Breakbeat</span><span>✦</span><span>Trip-Hop</span><span>✦</span><span>DnB Punk</span><span>✦</span>
+    <span>Drum &amp; Bass</span><span>✦</span><span>Jungle</span><span>✦</span><span>Cyberpunk Electronica</span><span>✦</span><span>Breakbeat</span><span>✦</span><span>Trip-Hop</span><span>✦</span><span>DnB Punk</span><span>✦</span>
+  </div>
+</div>
+
+<!-- ================= ARTISTS ================= -->
+<section class="sec" id="artists">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="kicker">// Roster</span>
+        <h2>The <em>Artists</em></h2>
+      </div>
+      <a class="chip yt" href="https://www.youtube.com/@rudebeatdistro" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.53A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12c1.88.53 9.38.53 9.38.53s7.5 0 9.38-.53A3 3 0 0 0 23.5 17.8 31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
+        <span>All videos</span>
+      </a>
+    </div>
+    <div class="artists" id="artist-list"><!-- rendered by JS --></div>
+  </div>
+</section>
+
+<!-- ================= FEATURED ================= -->
+<section class="sec featured">
+  <div class="wrap feat-grid">
+    <div class="video-frame reveal">
+      <iframe src="https://www.youtube-nocookie.com/embed/06Esi5gdCiw" title="Latest release — Rude Beat Distro"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="feat-copy reveal">
+      <span class="kicker">// Now playing</span>
+      <h2>Latest <em>transmission</em></h2>
+      <p>
+        Fresh from the lab: <b>Collective Consciousness</b> by Rude Beat Foundation —
+        energetic drum &amp; bass with a jungle backbone. New signals drop regularly.
+        Hit subscribe so you never miss a premiere.
+      </p>
+      <a class="btn yt" href="https://www.youtube.com/@rudebeatdistro?sub_confirmation=1" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.53A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12c1.88.53 9.38.53 9.38.53s7.5 0 9.38-.53A3 3 0 0 0 23.5 17.8 31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RELEASES ================= -->
+<section class="sec" id="releases">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="kicker">// Fresh drops</span>
+        <h2>Latest <em>Releases</em></h2>
+      </div>
+    </div>
+    <div class="rel-grid" id="release-grid"><!-- rendered by JS --></div>
+  </div>
+</section>
+
+<!-- ================= ABOUT / CTA ================= -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="about-inner reveal">
+      <span class="kicker">// The label</span>
+      <h2>Stay <span class="acid">Rude</span>. Stay Underground.</h2>
+      <p>
+        Rude Beat Distro is an independent record label operating on the sonic frontier —
+        where punk DNA collides with underground electronics. No filler, no compromise:
+        dark drum &amp; bass, ragged jungle breaks, industrial atmospheres and riot-ready energy.
+        Follow us where the music lives.
+      </p>
+      <div class="cta-row">
+        <a class="btn sp" href="https://open.spotify.com/artist/2Ss9tKcV3B6ZxJnITK6dnW" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.3a.75.75 0 0 1-1.03.25c-2.83-1.73-6.39-2.12-10.59-1.16a.75.75 0 1 1-.33-1.46c4.6-1.05 8.53-.6 11.7 1.34.35.21.46.67.25 1.03zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.24-1.99-8.17-2.57-12-1.4a.94.94 0 1 1-.55-1.8c4.38-1.33 9.81-.68 13.53 1.6.44.27.58.85.31 1.29zm.13-3.4C15.24 8.32 8.84 8.11 5.13 9.23a1.13 1.13 0 1 1-.65-2.16c4.26-1.29 11.33-1.04 15.8 1.62a1.13 1.13 0 0 1-1.18 1.94z"/></svg>
+          Follow on Spotify
+        </a>
+        <a class="btn yt" href="https://www.youtube.com/@rudebeatdistro?sub_confirmation=1" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.53A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12c1.88.53 9.38.53 9.38.53s7.5 0 9.38-.53A3 3 0 0 0 23.5 17.8 31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
+          Subscribe on YouTube
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="logo" href="#top">RUDE<em>BEAT</em> DISTRO</a>
+    <div class="foot-links">
+      <a href="https://www.youtube.com/@rudebeatdistro" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://open.spotify.com/artist/2Ss9tKcV3B6ZxJnITK6dnW" target="_blank" rel="noopener">Spotify</a>
+      <a href="#artists">Artists</a>
+      <a href="#releases">Releases</a>
+    </div>
+    <div class="mono">© <span id="year"></span> RUDE BEAT DISTRO — ALL FREQUENCIES RESERVED</div>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   EDIT YOUR DATA HERE
+   - Every video id is a YouTube id (the part after "watch?v=").
+   - Thumbnails are pulled automatically from YouTube for each id.
+   - To update Spotify links for Morpheia / Old Punks Desperate Riot,
+     replace the "spotify" URL with the artist profile link once live.
+   ===================================================================== */
+const LABEL = {
+  youtube: "https://www.youtube.com/@rudebeatdistro",
+  youtubeSub: "https://www.youtube.com/@rudebeatdistro?sub_confirmation=1",
+};
+
+const ARTISTS = [
+  {
+    name: "Rude Beat Foundation",
+    genres: ["Dark DnB", "Jungle", "Breakbeat", "Cyberpunk"],
+    bio: "The label's flagship project. Relentless dark drum & bass and nostalgic jungle transmissions from the machine age — human glitches, concrete echoes and 174 BPM adrenaline.",
+    image: "https://i.ytimg.com/vi/06Esi5gdCiw/maxresdefault.jpg",
+    spotify: "https://open.spotify.com/artist/2Ss9tKcV3B6ZxJnITK6dnW",
+    youtube: "https://www.youtube.com/@rudebeatdistro",
+    tracks: [
+      { title: "Collective Consciousness", id: "06Esi5gdCiw" },
+      { title: "Organic Mistake", id: "qSPUP0PsIeI" },
+      { title: "In the Loop", id: "B-5GPUSg36w" },
+      { title: "Echoes of Concrete", id: "g7cXuCvR0qk" },
+      { title: "Adrenaline", id: "DohrQguq8ak" },
+    ],
+  },
+  {
+    name: "Morpheia",
+    genres: ["Atmospheric Electronica", "Trip-Hop", "Dark Electronic"],
+    bio: "Slow-burning industrial atmospheres and cinematic trip-hop. Morpheia maps the space between dream and machine — heavy air, cold textures, deep pulse.",
+    image: "https://i.ytimg.com/vi/6qgN5D_M-Fk/maxresdefault.jpg",
+    spotify: "https://open.spotify.com/artist/1JsX1hdlAnoCDoOK2eYblv",
+    youtube: "https://www.youtube.com/watch?v=6qgN5D_M-Fk",
+    tracks: [
+      { title: "Industrial Trip", id: "6qgN5D_M-Fk" },
+    ],
+  },
+  {
+    name: "Old Punks Desperate Riot",
+    genres: ["DnB Punk", "Aggressive Drum & Bass", "Riot Energy"],
+    bio: "Where the mosh pit meets the rave. Old Punks Desperate Riot fuses aggressive drum & bass with pure punk contempt — loud, fast and gloriously unpolished.",
+    image: "https://i.ytimg.com/vi/XOSNEOV6ZuU/maxresdefault.jpg",
+    spotify: "https://open.spotify.com/artist/6kgUySRnH4ZUgV4NZi6qsu",
+    youtube: "https://www.youtube.com/watch?v=XOSNEOV6ZuU",
+    tracks: [
+      { title: "Well Dressed Sc*m", id: "XOSNEOV6ZuU" },
+    ],
+  },
+];
+
+const RELEASES = [
+  { artist: "Rude Beat Foundation", title: "Collective Consciousness — Energetic DnB · Jungle", id: "06Esi5gdCiw" },
+  { artist: "Rude Beat Foundation", title: "Organic Mistake — The Human Glitch in the Machine", id: "qSPUP0PsIeI" },
+  { artist: "Rude Beat Foundation", title: "In the Loop — Melancholic Drum & Bass / Jungle", id: "B-5GPUSg36w" },
+  { artist: "Rude Beat Distro", title: "City Scanner — Drum and Bass / Jungle", id: "yQ4iEA1M9lg" },
+  { artist: "Morpheia", title: "Industrial Trip — Atmospheric Electronica", id: "6qgN5D_M-Fk" },
+  { artist: "Rude Beat Foundation", title: "TRANSMISSION DISRUPTED — Cyberpunk Jungle DnB", id: "ld1cHJtY6Fc" },
+  { artist: "Rude Beat Foundation", title: "Quarantine Sound — DnB / Jungle", id: "OFQ6jx-sBgg" },
+  { artist: "Old Punks Desperate Riot", title: "Well Dressed Sc*m — Aggressive DnB Punk", id: "XOSNEOV6ZuU" },
+  { artist: "Rude Beat Foundation", title: "Echoes of Concrete — Nostalgic Jungle w/ Ragga Soul", id: "g7cXuCvR0qk" },
+];
+
+/* ---------- render helpers ---------- */
+const yt = id => `https://www.youtube.com/watch?v=${id}`;
+const thumb = id => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+const SP_ICON = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.3a.75.75 0 0 1-1.03.25c-2.83-1.73-6.39-2.12-10.59-1.16a.75.75 0 1 1-.33-1.46c4.6-1.05 8.53-.6 11.7 1.34.35.21.46.67.25 1.03zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.24-1.99-8.17-2.57-12-1.4a.94.94 0 1 1-.55-1.8c4.38-1.33 9.81-.68 13.53 1.6.44.27.58.85.31 1.29zm.13-3.4C15.24 8.32 8.84 8.11 5.13 9.23a1.13 1.13 0 1 1-.65-2.16c4.26-1.29 11.33-1.04 15.8 1.62a1.13 1.13 0 0 1-1.18 1.94z"/></svg>`;
+const YT_ICON = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.53A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12c1.88.53 9.38.53 9.38.53s7.5 0 9.38-.53A3 3 0 0 0 23.5 17.8 31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>`;
+const PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+
+document.getElementById("artist-list").innerHTML = ARTISTS.map((a, i) => `
+  <article class="artist reveal">
+    <div class="artist-media">
+      <span class="artist-num">0${i + 1} / ARTIST</span>
+      <img src="${a.image}" alt="${esc(a.name)}" loading="lazy"
+           onerror="this.src=thumb('${a.tracks[0].id}')">
+    </div>
+    <div class="artist-body">
+      <h3>${esc(a.name)}</h3>
+      <div class="genres">${a.genres.map(g => `<span class="genre">${esc(g)}</span>`).join("")}</div>
+      <p>${esc(a.bio)}</p>
+      <div class="tracks">
+        ${a.tracks.map((t, n) => `
+          <a class="track" href="${yt(t.id)}" target="_blank" rel="noopener">
+            <span class="tno">${String(n + 1).padStart(2, "0")}</span>
+            <span class="tname">${esc(t.title)}</span>
+            <span class="play">${PLAY}</span>
+          </a>`).join("")}
+      </div>
+      <div class="artist-actions">
+        <a class="btn sp sm" href="${a.spotify}" target="_blank" rel="noopener">${SP_ICON} Spotify</a>
+        <a class="btn yt sm" href="${a.youtube}" target="_blank" rel="noopener">${YT_ICON} YouTube</a>
+      </div>
+    </div>
+  </article>`).join("");
+
+document.getElementById("release-grid").innerHTML = RELEASES.map(r => `
+  <a class="rel reveal" href="${yt(r.id)}" target="_blank" rel="noopener">
+    <div class="rel-thumb">
+      <img src="${thumb(r.id)}" alt="${esc(r.title)}" loading="lazy">
+      <div class="rel-play"><span>${PLAY}</span></div>
+    </div>
+    <div class="rel-info">
+      <div class="rel-artist">${esc(r.artist)}</div>
+      <div class="rel-title">${esc(r.title)}</div>
+    </div>
+  </a>`).join("");
+
+/* reveal on scroll */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
