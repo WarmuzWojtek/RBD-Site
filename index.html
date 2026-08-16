@@ -283,6 +283,11 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
 .foot-links{display:flex;gap:18px}
 .foot-links a{color:var(--muted);font-size:13px;transition:color .2s}
 .foot-links a:hover{color:var(--acid)}
+.foot-links button{
+  font-family:inherit;font-size:13px;line-height:inherit;color:var(--muted);
+  background:none;border:0;padding:0;cursor:pointer;transition:color .2s;
+}
+.foot-links button:hover{color:var(--acid)}
 
 /* ---------- reveal on scroll ---------- */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
@@ -527,6 +532,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
       <a href="https://open.spotify.com/playlist/0uQRAiAMuRNUP2cJFYDfi5" target="_blank" rel="noopener">Spotify</a>
       <a href="#artists">Artists</a>
       <a href="#releases">Releases</a>
+      <button type="button" id="cookie-settings">Cookies</button>
     </div>
     <div class="mono">© <span id="year"></span> RUDE BEAT DISTRO — ALL FREQUENCIES RESERVED</div>
   </div>
@@ -756,11 +762,19 @@ document.getElementById("year").textContent = new Date().getFullYear();
   let stored = null;
   try { stored = localStorage.getItem(KEY); } catch (e) {}
 
-  /* Baner pokazujemy tylko, gdy nie ma jeszcze zapisanej decyzji */
-  if (stored !== 'granted' && stored !== 'denied') {
+  let hideTimer = null;
+
+  function openBanner() {
+    clearTimeout(hideTimer);       /* anuluj ukrycie w trakcie animacji */
     banner.hidden = false;
     requestAnimationFrame(() => banner.classList.add('in'));
+    /* rAF jest wstrzymany w kartach w tle — bez tego baner zostałby
+       niewidoczny (opacity:0), ale nadal łapałby kliknięcia */
+    setTimeout(() => banner.classList.add('in'), 80);
   }
+
+  /* Baner pokazujemy sam z siebie tylko, gdy nie ma jeszcze zapisanej decyzji */
+  if (stored !== 'granted' && stored !== 'denied') openBanner();
 
   function decide(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
@@ -768,11 +782,20 @@ document.getElementById("year").textContent = new Date().getFullYear();
       gtag('consent', 'update', { analytics_storage: value });
     }
     banner.classList.remove('in');
-    setTimeout(() => { banner.hidden = true; }, 450);
+    hideTimer = setTimeout(() => { banner.hidden = true; }, 450);
   }
 
   document.getElementById('cookie-accept').addEventListener('click', () => decide('granted'));
   document.getElementById('cookie-reject').addEventListener('click', () => decide('denied'));
+
+  /* Link "Cookies" w stopce — pozwala zmienić lub wycofać wcześniejszą zgodę */
+  const settings = document.getElementById('cookie-settings');
+  if (settings) {
+    settings.addEventListener('click', () => {
+      openBanner();
+      banner.scrollIntoView({ block: 'nearest' });
+    });
+  }
 })();
 </script>
 </body>
