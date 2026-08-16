@@ -313,6 +313,8 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
   color:var(--acid);display:block;margin-bottom:8px;
 }
 .cookie-copy p{color:var(--muted);font-size:14.5px;max-width:70ch}
+.cookie-copy a{color:var(--acid);text-decoration:underline;text-underline-offset:3px}
+.cookie-copy a:hover{opacity:.8}
 .cookie-actions{display:flex;gap:12px;flex-wrap:wrap;flex:none}
 .cookie-banner .btn{
   padding:13px 28px;font-size:12.5px;border:0;cursor:pointer;justify-content:center;
@@ -532,6 +534,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
       <a href="https://open.spotify.com/playlist/0uQRAiAMuRNUP2cJFYDfi5" target="_blank" rel="noopener">Spotify</a>
       <a href="#artists">Artists</a>
       <a href="#releases">Releases</a>
+      <a href="privacy.html">Privacy</a>
       <button type="button" id="cookie-settings">Cookies</button>
     </div>
     <div class="mono">© <span id="year"></span> RUDE BEAT DISTRO — ALL FREQUENCIES RESERVED</div>
@@ -546,7 +549,8 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
       <p>
         We use analytics cookies to see which tracks and links actually get played.
         No ads, no selling data, no tracking you across other sites. Your call —
-        the site works either way.
+        the site works either way. More in our
+        <a href="privacy.html">Privacy Policy</a>.
       </p>
     </div>
     <div class="cookie-actions">
@@ -773,8 +777,9 @@ document.getElementById("year").textContent = new Date().getFullYear();
     setTimeout(() => banner.classList.add('in'), 80);
   }
 
-  /* Baner pokazujemy sam z siebie tylko, gdy nie ma jeszcze zapisanej decyzji */
-  if (stored !== 'granted' && stored !== 'denied') openBanner();
+  /* Baner pokazujemy sam z siebie tylko, gdy nie ma jeszcze zapisanej decyzji.
+     Wyjątek: wejście z #cookies (link z polityki prywatności) otwiera go zawsze. */
+  if (location.hash === '#cookies' || (stored !== 'granted' && stored !== 'denied')) openBanner();
 
   function decide(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}

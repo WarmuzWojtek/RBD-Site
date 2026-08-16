@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Rude Beat Distro</title>
+<meta name="description" content="Privacy policy of Rude Beat Distro — what data we collect, why, and what rights you have.">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060709;
+  --bg-2:#0c0e12;
+  --panel:#101318;
+  --line:rgba(255,255,255,.08);
+  --txt:#e8eaed;
+  --muted:#8a919c;
+  --acid:#c8ff1e;
+  --pink:#ff2d78;
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--txt);
+  font-family:'Space Grotesk',sans-serif;line-height:1.7;overflow-x:hidden;
+}
+::selection{background:var(--acid);color:#000}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+h1,h2,h3{font-family:'Unbounded',sans-serif;overflow-wrap:break-word;word-break:break-word}
+a{color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(6,7,9,.72);border-bottom:1px solid var(--line);
+}
+.nav-in{max-width:860px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:20px}
+.logo{font-family:'Unbounded',sans-serif;font-weight:900;font-size:15px;letter-spacing:.06em;white-space:nowrap;text-decoration:none}
+.logo em{font-style:normal;color:var(--acid)}
+.back{
+  margin-left:auto;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .2s;white-space:nowrap;
+}
+.back:hover{color:var(--acid)}
+
+/* ---------- content ---------- */
+.head{padding:80px 0 40px;position:relative}
+.head::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background:radial-gradient(60% 70% at 20% 0%, rgba(200,255,30,.08), transparent 70%);
+}
+.kicker{
+  font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--pink);display:block;margin-bottom:14px;
+}
+.head h1{font-size:clamp(30px,6vw,54px);font-weight:900;text-transform:uppercase;line-height:1.05}
+.updated{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin-top:18px;
+}
+main{padding-bottom:90px}
+section.block{margin-top:52px}
+section.block h2{
+  font-size:clamp(19px,2.6vw,25px);font-weight:800;text-transform:uppercase;
+  line-height:1.2;margin-bottom:16px;
+}
+section.block h2 .num{color:var(--acid);font-family:'JetBrains Mono',monospace;font-size:.7em;margin-right:10px}
+p{color:var(--muted);margin-bottom:14px}
+p strong,li strong{color:var(--txt);font-weight:500}
+ul{margin:0 0 16px 20px;color:var(--muted)}
+li{margin-bottom:9px}
+a.link{color:var(--acid);text-decoration:underline;text-underline-offset:3px}
+a.link:hover{opacity:.8}
+
+.card{
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);padding:26px 28px;margin-bottom:18px;
+}
+.card h3{font-size:16px;font-weight:700;text-transform:uppercase;margin-bottom:10px;letter-spacing:.02em}
+.card p:last-child{margin-bottom:0}
+.meta{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--acid);display:block;margin-bottom:8px;
+}
+
+/* table */
+.table-scroll{overflow-x:auto;margin-bottom:18px;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--acid);background:rgba(255,255,255,.02);
+}
+tr:last-child td{border-bottom:0}
+td{color:var(--muted)}
+td:first-child{color:var(--txt)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:40px 0;background:var(--bg-2)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.foot-links{display:flex;gap:18px;flex-wrap:wrap}
+.foot-links a{color:var(--muted);font-size:13px;text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--acid)}
+.foot-links button{
+  font-family:inherit;font-size:13px;line-height:inherit;color:var(--muted);
+  background:none;border:0;padding:0;cursor:pointer;transition:color .2s;
+}
+.foot-links button:hover{color:var(--acid)}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em}
+
+@media (max-width:560px){
+  .head{padding:56px 0 30px}
+  .card{padding:22px 20px}
+  section.block{margin-top:40px}
+  .nav-in{padding:12px 16px;gap:12px}
+  .logo{font-size:13px}
+  .back{font-size:11px;letter-spacing:.1em}
+  .wrap{padding:0 16px}
+  table{min-width:430px}
+  th,td{padding:11px 13px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="logo" href="index.html">RUDE<em>BEAT</em> DISTRO</a>
+    <a class="back" href="index.html">← Back to site</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="head">
+    <span class="kicker">// Legal</span>
+    <h1>Privacy Policy</h1>
+    <div class="updated">Last updated: 16 August 2026</div>
+  </header>
+
+  <main>
+    <p>
+      This page explains what happens to your data when you visit
+      <strong>rude-beat.com</strong>. Short version: we don't ask you for anything, we don't
+      run ads, we don't sell data, and we don't build profiles. We use one analytics tool —
+      and only if you allow it.
+    </p>
+
+    <!-- 01 -->
+    <section class="block">
+      <h2><span class="num">01</span>Who is responsible</h2>
+      <div class="card">
+        <span class="meta">Data controller</span>
+        <p>
+          <strong>Wojciech Warmuz</strong> — operator of Rude Beat Distro.<br>
+          Contact: <a class="link" href="mailto:contact@rude-beat.com">contact@rude-beat.com</a>
+        </p>
+        <p>
+          Write to that address for anything related to your data — access, deletion,
+          objections or just questions.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="block">
+      <h2><span class="num">02</span>What we collect and why</h2>
+      <p>
+        There are no forms, no accounts and no newsletter on this site, so we never receive
+        your name, e-mail or any details you type. What does get processed is the following:
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Purpose</th>
+              <th>Legal basis (GDPR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Server logs — IP address, browser type, date and time of the request</td>
+              <td>Keeping the site online, security, diagnosing failures</td>
+              <td>Art. 6(1)(f) — our legitimate interest in running a working, secure site</td>
+            </tr>
+            <tr>
+              <td>Analytics — pseudonymous identifier, pages viewed, device and browser type, approximate location (city level), referring source, clicks on Spotify / YouTube links</td>
+              <td>Understanding which releases and links people actually open, so we know what to publish next</td>
+              <td>Art. 6(1)(a) — your consent, given in the cookie banner</td>
+            </tr>
+            <tr>
+              <td>Your cookie choice, stored in your browser under <code>rbd-consent</code></td>
+              <td>Remembering whether you accepted or rejected analytics, so we stop asking</td>
+              <td>Art. 6(1)(f) — necessary to respect the choice you made</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        We do not use your data for automated decisions that produce legal effects for you,
+        and we do not target advertising. This site is not directed at children.
+      </p>
+    </section>
+
+    <!-- 03 -->
+    <section class="block">
+      <h2><span class="num">03</span>Cookies and similar storage</h2>
+      <p>
+        Before you make a choice in the banner, <strong>no analytics cookies are set</strong>.
+        We use Google Consent Mode, which starts with analytics storage denied and only
+        switches on if you press “Accept”.
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Set by</th>
+              <th>Purpose / lifetime</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>rbd-consent</code></td>
+              <td>This site (localStorage)</td>
+              <td>Stores your cookie decision. Kept until you clear your browser storage.</td>
+            </tr>
+            <tr>
+              <td><code>_ga</code>, <code>_ga_&lt;ID&gt;</code></td>
+              <td>Google Analytics — only after consent</td>
+              <td>Distinguishes visitors so visits can be counted. Up to 2 years.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        You can change or withdraw your decision at any time by clicking
+        <strong>“Cookies”</strong> in the footer of the site. Withdrawing consent does not
+        affect processing that already happened while consent was active.
+      </p>
+    </section>
+
+    <!-- 04 -->
+    <section class="block">
+      <h2><span class="num">04</span>Third parties and embedded content</h2>
+      <p>
+        Some parts of the page are loaded from external services. When your browser fetches
+        them, <strong>it sends your IP address to those services</strong> — this happens as
+        part of loading the page, independently of the analytics consent above:
+      </p>
+      <ul>
+        <li><strong>Google Fonts</strong> — the typefaces used across the site.</li>
+        <li><strong>YouTube</strong> — release thumbnails and the embedded player in the
+          “Latest transmission” section. The player is loaded from
+          <code>youtube-nocookie.com</code>, which does not set tracking cookies until you
+          actually start playback.</li>
+        <li><strong>Google Analytics</strong> — loaded with consent denied by default, as
+          described above.</li>
+      </ul>
+      <p>
+        These services are provided by Google Ireland Limited and Google LLC. Data may be
+        transferred outside the European Economic Area, in particular to the United States;
+        Google relies on the EU–U.S. Data Privacy Framework and standard contractual clauses
+        as safeguards. Their handling of data is described in the
+        <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>.
+      </p>
+      <p>
+        The site is hosted on infrastructure of our hosting provider, which processes server
+        logs on our behalf. If you open a Spotify or YouTube link from this site, you leave
+        it and the privacy policy of that platform applies from that point on.
+      </p>
+    </section>
+
+    <!-- 05 -->
+    <section class="block">
+      <h2><span class="num">05</span>How long we keep data</h2>
+      <ul>
+        <li><strong>Server logs</strong> — for the period applied by our hosting provider,
+          typically a few weeks up to several months.</li>
+        <li><strong>Analytics data</strong> — for the retention period configured in our
+          Google Analytics property, no longer than 14 months.</li>
+        <li><strong>Your cookie choice</strong> — stays in your browser until you clear it.</li>
+      </ul>
+    </section>
+
+    <!-- 06 -->
+    <section class="block">
+      <h2><span class="num">06</span>Your rights</h2>
+      <p>Under the GDPR you have the right to:</p>
+      <ul>
+        <li>access your data and receive a copy of it,</li>
+        <li>have inaccurate data corrected,</li>
+        <li>have your data deleted,</li>
+        <li>restrict or object to processing based on legitimate interest,</li>
+        <li>data portability,</li>
+        <li>withdraw consent at any time — via the “Cookies” link in the footer,</li>
+        <li>lodge a complaint with the supervisory authority. In Poland this is the
+          President of the Personal Data Protection Office (Prezes Urzędu Ochrony Danych
+          Osobowych), ul. Stawki 2, 00-193 Warszawa.</li>
+      </ul>
+      <p>
+        To exercise any of these, write to
+        <a class="link" href="mailto:contact@rude-beat.com">contact@rude-beat.com</a>.
+        Note that analytics data is pseudonymous — we usually cannot link it back to a
+        specific person, so for some requests we may need extra information to identify the
+        data in question.
+      </p>
+      <p>
+        Providing data is not a legal or contractual requirement. You can browse the entire
+        site with analytics rejected — nothing stops working.
+      </p>
+    </section>
+
+    <!-- 07 -->
+    <section class="block">
+      <h2><span class="num">07</span>Changes to this policy</h2>
+      <p>
+        If we add a new tool or change how the site works, we will update this page and the
+        date at the top. Material changes affecting consent will be signalled by showing the
+        cookie banner again.
+      </p>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <a class="logo" href="index.html">RUDE<em>BEAT</em> DISTRO</a>
+    <div class="foot-links">
+      <a href="index.html#artists">Artists</a>
+      <a href="index.html#releases">Releases</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="index.html#cookies">Cookies</a>
+    </div>
+    <div class="mono">© <span id="year"></span> RUDE BEAT DISTRO — ALL FREQUENCIES RESERVED</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
