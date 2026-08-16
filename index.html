@@ -288,6 +288,40 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
 
+/* ---------- cookie banner ---------- */
+.cookie-banner{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;padding:0 24px 24px;
+  opacity:0;transform:translateY(24px);
+  transition:opacity .45s ease,transform .45s ease;
+}
+.cookie-banner.in{opacity:1;transform:none}
+.cookie-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
+  background:rgba(12,14,18,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 26px;box-shadow:0 24px 70px rgba(0,0,0,.6);
+}
+.cookie-copy{flex:1 1 380px;min-width:0}
+.cookie-kicker{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--acid);display:block;margin-bottom:8px;
+}
+.cookie-copy p{color:var(--muted);font-size:14.5px;max-width:70ch}
+.cookie-actions{display:flex;gap:12px;flex-wrap:wrap;flex:none}
+.cookie-banner .btn{
+  padding:13px 28px;font-size:12.5px;border:0;cursor:pointer;justify-content:center;
+}
+.cookie-banner .btn.acid{background:var(--acid);color:#0a0d02}
+.cookie-banner .btn.acid:hover{box-shadow:0 12px 34px rgba(200,255,30,.35)}
+.cookie-banner .btn.ghost{border:1px solid var(--line)}
+@media (max-width:560px){
+  .cookie-banner{padding:0 14px 14px}
+  .cookie-inner{padding:18px;gap:16px}
+  .cookie-actions{width:100%}
+  .cookie-actions .btn{flex:1}
+}
+
 /* ---------- responsive ---------- */
 @media (max-width:980px){
   .artist,.artist:nth-child(even){grid-template-columns:1fr}
@@ -312,14 +346,32 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
   .about-inner h2{font-size:clamp(20px,6vw,50px)}
 }
 </style>
-<!-- Google tag (gtag.js) — GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-L5PLWD4QK5"></script>
+<!-- Google tag (gtag.js) — GA4 + Consent Mode v2 -->
 <script>
+  /* Ten blok MUSI wykonać się przed załadowaniem gtag.js, żeby GA startowało
+     z odmową zgody i nie zapisywało cookies przed decyzją użytkownika. */
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+
+  /* Odtworzenie wcześniejszej decyzji z tej przeglądarki */
+  try {
+    if (localStorage.getItem('rbd-consent') === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
+  } catch (e) {}
+
   gtag('js', new Date());
   gtag('config', 'G-L5PLWD4QK5');
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L5PLWD4QK5"></script>
 </head>
 <body>
 
@@ -479,6 +531,24 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
     <div class="mono">© <span id="year"></span> RUDE BEAT DISTRO — ALL FREQUENCIES RESERVED</div>
   </div>
 </footer>
+
+<!-- ================= COOKIE BANNER ================= -->
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie consent" hidden>
+  <div class="cookie-inner">
+    <div class="cookie-copy">
+      <span class="cookie-kicker">// Cookies</span>
+      <p>
+        We use analytics cookies to see which tracks and links actually get played.
+        No ads, no selling data, no tracking you across other sites. Your call —
+        the site works either way.
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button class="btn acid" type="button" id="cookie-accept">Accept</button>
+      <button class="btn ghost" type="button" id="cookie-reject">Reject</button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* =====================================================================
@@ -675,6 +745,35 @@ document.getElementById("year").textContent = new Date().getFullYear();
       });
     }
   });
+</script>
+<!-- Baner zgody na cookies (Consent Mode v2) -->
+<script>
+(function () {
+  const KEY = 'rbd-consent';
+  const banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+
+  let stored = null;
+  try { stored = localStorage.getItem(KEY); } catch (e) {}
+
+  /* Baner pokazujemy tylko, gdy nie ma jeszcze zapisanej decyzji */
+  if (stored !== 'granted' && stored !== 'denied') {
+    banner.hidden = false;
+    requestAnimationFrame(() => banner.classList.add('in'));
+  }
+
+  function decide(value) {
+    try { localStorage.setItem(KEY, value); } catch (e) {}
+    if (typeof gtag === 'function') {
+      gtag('consent', 'update', { analytics_storage: value });
+    }
+    banner.classList.remove('in');
+    setTimeout(() => { banner.hidden = true; }, 450);
+  }
+
+  document.getElementById('cookie-accept').addEventListener('click', () => decide('granted'));
+  document.getElementById('cookie-reject').addEventListener('click', () => decide('denied'));
+})();
 </script>
 </body>
 </html>
