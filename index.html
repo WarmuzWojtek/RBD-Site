@@ -312,6 +312,14 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
   .about-inner h2{font-size:clamp(20px,6vw,50px)}
 }
 </style>
+<!-- Google tag (gtag.js) — GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L5PLWD4QK5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L5PLWD4QK5');
+</script>
 </head>
 <body>
 
@@ -615,6 +623,58 @@ fetch("videos.json", { cache: "no-store" })
   .catch(() => {});
 
 document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<!-- Śledzenie kliknięć Spotify / YouTube -->
+<script>
+  document.addEventListener('click', function (e) {
+    const link = e.target.closest('a');
+    if (!link || !link.href) return;
+
+    const url = link.href;
+    let platform = null;
+    if (url.includes('spotify.com')) platform = 'spotify';
+    if (url.includes('youtube.com') || url.includes('youtu.be')) platform = 'youtube';
+    if (!platform) return;
+
+    /* link_type rozróżnia cel kliknięcia: subskrypcja/playlista (konwersja)
+       vs odtworzenie konkretnego utworu vs wejście na profil/kanał. */
+    let linkType = 'other';
+    if (platform === 'youtube') {
+      if (url.includes('sub_confirmation=1')) linkType = 'subscribe';
+      else if (url.includes('watch?v=') || url.includes('youtu.be/')) linkType = 'video';
+      else linkType = 'channel';
+    } else {
+      if (url.includes('/playlist/')) linkType = 'playlist';
+      else if (url.includes('/artist/')) linkType = 'artist';
+      else if (url.includes('/track/') || url.includes('/album/')) linkType = 'release';
+    }
+
+    /* Sekcja strony, z której pochodzi kliknięcie (nav / hero / artists / ...) */
+    const section = link.closest('nav, header, section, footer');
+    let placement = 'unknown';
+    if (section) {
+      if (section.classList.contains('hero')) placement = 'hero';
+      else if (section.classList.contains('featured')) placement = 'featured';
+      else placement = section.id || section.tagName.toLowerCase();
+    }
+
+    /* Nazwa utworu / artysty przy kliknięciu w kartę, jeśli dostępna */
+    const label = (
+      link.querySelector('.tname, .rel-title') ||
+      link.closest('.artist')?.querySelector('h3') ||
+      link
+    ).textContent.trim().slice(0, 100);
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'platform_click', {
+        platform: platform,
+        link_type: linkType,
+        placement: placement,
+        link_label: label,
+        link_url: url
+      });
+    }
+  });
 </script>
 </body>
 </html>
