@@ -17,9 +17,14 @@ Jak to działa:
   byłoby wiarygodne.
 
 Wdrożenie na hostido.pl:
-1. Wgraj na serwer: index.html, fetch-videos.php, releases-archive.json
-   (videos.json wgraj też, jako pierwsze dane — zostanie nadpisany przy
-   pierwszym uruchomieniu crona).
+1. Wgraj na serwer komplet plików strony:
+   - index.html, privacy.html
+   - fetch-videos.php, releases-archive.json
+   - videos.json (jako pierwsze dane — zostanie nadpisany przy pierwszym
+     uruchomieniu crona)
+   - katalog covers/ (okładki artystów)
+   - katalog fonts/ (fonty hostowane lokalnie — BEZ nich strona wyświetli
+     się zapasowym krojem systemowym)
 2. W panelu hostido znajdź sekcję "Cron" / "Zadania cykliczne".
 3. Dodaj nowe zadanie:
    - Częstotliwość: raz w tygodniu (np. w niedzielę o 03:00)
